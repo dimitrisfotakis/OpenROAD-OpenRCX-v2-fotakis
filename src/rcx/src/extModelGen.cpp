@@ -50,6 +50,8 @@ uint extRCModel::GenExtModel(std::list<std::string> &corner_list, const char *ou
         g->writeRules(outFP, binary, ii, ii); 
     }
     fclose(outFP);
+    fclose(_logFP);
+    fclose(_dbg_logFP);
     return 0;
 }
 
@@ -67,24 +69,26 @@ uint extMain::GenExtModel(std::list<std::string> spef_file_list, std::list<std::
     {
         std::string str = *it;
         const char *filename = str.c_str();
-        // TODO notice(0, "------------------------- Reading SPEF file %s\n", filename);
+        fprintf(stdout, "------------------------- Reading SPEF file %s\n", filename);
 
-/* -------------------------------- TODO ----------------------------------------------------------------------------- */
-        // readSPEF((char *)filename, NULL, /*force*/ true, false,
-        //         false, NULL, false, false, false, -0.5, 0.0, 1.0, false,
-        //         false, NULL, false, -1, 0.0, 0.0, NULL, NULL, NULL, NULL,
-        //         NULL, -1, 0,
-        //         false, false, NULL, /*testParsing*/ false, false, false /*diff*/, false /*calibrate*/, 0);
+        readSPEF((char *)filename, NULL, /*force*/ true, false,
 
-        char *out = "1.model";
-        if (cnt == 1)
-            out = "2.model";
+        NULL, false, false, false, 
+        -0.5, 0.0, 1.0, 
+        false, false, 
+        NULL, false, 
+        -1, 0.0, 0.0, 
+        NULL, NULL, NULL, NULL, NULL, 
+        -1, 0,
+        false, false, 
+        /*testParsing*/ 0, false, false /*diff*/, false /*calibrate*/, 0);
+
         // extRCModel* extRulesModel = new extRCModel(layerCnt, "TYPICAL", logger_);
         extModelGen *extRulesModel = new extModelGen(layerCnt, "TYPICAL", logger_);
         extRulesModel->setExtMain(this);
 
         uint diagOption = 1;
-        extRulesModel->ReadRCDB(_block, widthCnt, diagOption, out);
+        extRulesModel->ReadRCDB(_block, widthCnt, diagOption, "out");
         if (outFP==NULL)
             outFP = extRulesModel->InitWriteRules(out_file, corner_list, comment, binary, fileCnt);
 
@@ -98,7 +102,7 @@ void extModelGen::writeRules(FILE *fp, bool binary, uint mIndex, int corner)
 {
     uint m= 0;
     bool writeRes = true;
-    bool writeOpen = true;
+    // DELETE bool writeOpen = true;
 
     extMetRCTable *rcTable0 = getMetRCTable(0); // orig call
 
@@ -147,9 +151,7 @@ void extModelGen::writeRules(FILE *fp, bool binary, uint mIndex, int corner)
         }
         else if (m == 0)
         {
-            // notice(0, "Cannot write <DIAGUNDER> rules for <DensityModel> %d and layer %d\n", m, ii);
-            // TODO logger_->info( RCX, 220, "Cannot write <DIAGUNDER> rules for <DensityModel> {} and layer {}", m, ii);
-            fprintf(stdout, "Cannot write <DIAGUNDER> rules for <DensityModel> {} and layer {}", m, ii);
+            fprintf(stdout, "Cannot write <DIAGUNDER> rules for <DensityModel> %d and layer %d\n", m, ii);
         }
         if ((ii > 1) && (ii < layerCnt - 1))
         {
@@ -171,7 +173,6 @@ uint extRCModel::writeRulesPattern(uint ou, uint layer, int modelIndex, extDistW
     table= table_0;
   else if (modelIndex == 0) {
     fprintf(stdout, "Cannot write %s rules for <DensityModel> %d and layer %d", patternKeyword, modelIndex, layer);
-    // TODO logger_->info( RCX, 218, "Cannot write {} rules for <DensityModel> {} and layer {}", patternKeyword, modelIndex, layer);
     return 0;
   }
   if (ou==0)
@@ -330,7 +331,7 @@ FILE *extModelGen::InitWriteRules(const char *name, std::list<std::string> corne
     //	FILE *fp= openFile("./", name, NULL, "w");
     FILE *fp = fopen(name, "w");
 
-    uint cnt = 0;
+   // DELETE uint cnt = 0;
     fprintf(fp, "Extraction Rules for rcx\n\n");
     fprintf(fp, "Version 1.2\n\n");
     if (diag || diagModel > 0)
@@ -348,7 +349,8 @@ FILE *extModelGen::InitWriteRules(const char *name, std::list<std::string> corne
         fprintf(fp, " %d", kk);
     fprintf(fp, "\n");
 
-    fprintf(fp, "\nCorners %d : ", corner_list.size());
+    uint ct= corner_list.size();
+    fprintf(fp, "\nCorners %d : ", ct);
     std::list<std::string>::iterator it;
     for (it = corner_list.begin(); it != corner_list.end(); ++it)
     {
@@ -389,9 +391,9 @@ uint extModelGen::ReadRCDB(dbBlock *block, uint widthCnt, uint diagOption, char 
 
     int prev_sep = 0;
     int prev_width = 0;
-    int n = 0;
+    // DELETE int n = 0;
 
-    double via_res_1 = 0;
+    // DELETE double via_res_1 = 0;
 
     odb::dbSet<dbNet> nets = block->getNets();
     odb::dbSet<dbNet>::iterator itr;
