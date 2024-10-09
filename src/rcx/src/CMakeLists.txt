@@ -38,33 +38,50 @@ add_library(rcx_lib
   extBench.cpp
   extBenchDB.cpp
   extCC.cpp
-  extCoords.cpp
-  extFlow.cpp
-  extRCmodel.cpp
-  extSpef.cpp
-  extSpefIn.cpp
-  extmain.cpp
   extmeasure.cpp
-  extDebugPrint.cpp
-  extstats.cpp
-  extprocess.cpp
-  netRC.cpp
   extmeasure_res.cpp
+    extmeasure_calc.cpp
+    extmeasure_dist.cpp
+    extmeasure_flow.cpp
+    extmeasure_diag.cpp
+    extSegment.cpp
+    findsegments.cpp
+    extmeasure_print.cpp
+    extmeasure_rc_flow.cpp
+    extmeasure_couple.cpp
+  extFlow.cpp
   name.cpp
   grids.cpp
   gs.cpp
   dbUtil.cpp
+  extstats.cpp
+  extprocess.cpp
   process_ext.cpp
   extRCmodel_process.cpp
   extRCmodel_solver.cpp
+extDefPatterns.cpp  
+extDefPatternsVia.cpp
+extRulesVia.cpp
+  extRCmodel.cpp
   extSolverGen.cpp
+      extPatterns.cpp
+    pattern_ext.cpp
+  netRC.cpp
+  extSpef.cpp
   extModelGen.cpp
+  extSpefIn.cpp
+  extmeasure_res_v2.cpp
+  extFlow_v2.cpp
+  extDebugPrint.cpp
+  extCoords.cpp
+  extmain.cpp
 )
 
 target_include_directories(rcx_lib
   PUBLIC
     ../include
     ../include/rcx
+    ../../odb/include/odb
 )
 
 target_link_libraries(rcx_lib
