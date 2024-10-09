@@ -71,7 +71,7 @@ using odb::Rect;
 class dbCreateNetUtil
 {
  public:
-  dbCreateNetUtil(utl::Logger* logger);
+  dbCreateNetUtil(utl::Logger* logger=NULL);
   ~dbCreateNetUtil();
 
   void setBlock(dbBlock* block, bool skipInit = false);
