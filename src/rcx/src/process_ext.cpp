@@ -111,7 +111,7 @@ Ext::write_rcx_model(const char* filename)
     std::list<std::string> corner_list;
     m->getCorners(corner_list);
 
-    extModelGen *g= (extModelGen *) m;
+    // DELETE extModelGen *g= (extModelGen *) m;
     m->GenExtModel(corner_list, filename, "FasterCap Integration", "v2.0", 0);
 
 

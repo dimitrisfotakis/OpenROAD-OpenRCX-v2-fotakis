@@ -1,4 +1,4 @@
-OpenROAD 1ac1b28fede6720290637eee0904fbc090dbbdc9 
+OpenROAD c3d11e66691fd0b11aa71747f80083d0cec8577e 
 Features included (+) or not (-): +Charts +GPU +GUI +Python : Debug
 This program is licensed under the BSD-3 license. See the LICENSE file for details.
 Components of this program may be licensed under more restrictive licenses which must be honored.
@@ -35,7 +35,7 @@ Metal 1 Over 0 DiagUnder 2 Dist 0.2800 Width 0.1400 LEN 10 CC 0.110369 FR 0.1919
 Metal 1 Over 0 DiagUnder 3 Dist 0.1400 Width 0.1400 LEN 10 CC 0.248002 FR 0.123662 TC 0.371664 CC2 0.001514 DiagDist 0.28 DiagWidth 0.14 DiagCC 0.016809 UnderDiag3/M1duM3/W0.14_W0.14/S0.14_S0.28_L10/wire_1 
 Metal 1 Over 0 DiagUnder 3 Dist 0.1400 Width 0.1400 LEN 10 CC 0.480085 FR 0.072847 TC 0.552932 CC2 -0.000000 DiagDist 0.28 DiagWidth 0.14 DiagCC 0.009514 UnderDiag3/M1duM3/W0.14_W0.14/S0.14_S0.28_L10/wire_2 
 Metal 1 Over 0 DiagUnder 3 Dist 0.1400 Width 0.1400 LEN 10 CC 0.245333 FR 0.134651 TC 0.379984 CC2 0.001838 DiagDist 0.28 DiagWidth 0.14 DiagCC 0.016369 UnderDiag3/M1duM3/W0.14_W0.14/S0.14_S0.28_L10/wire_3 
-[INFO RCX-0442] 30 lines parsed, 0 lines skipped not starting with <Metal>, 20 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/du_parse.GOLD/fasterCap_3v2.standard.20.0.0.UnderDiag3.GOLD.caps
+[INFO RCX-0446] 30 lines parsed, 0 lines skipped not starting with <Metal>, 20 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/du_parse.GOLD/fasterCap_3v2.standard.20.0.0.UnderDiag3.GOLD.caps
 
 openroad> read_rcx_tables -corner MIN -file  /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/ou_parse.GOLD/fasterCap_3v2.standard.20.0.0.OverUnder3.GOLD.caps 
 Metal 2 Over 1 Under 3 Dist 0.1400 Width 0.1400 LEN 10 CC 0.338405 FR 0.342773 TC 0.681178 CC2 0.007065 OverUnder3/M2oM1uM3/W0.14_W0.14/S0.14_S0.14_L10/wire_1 
@@ -455,15 +455,15 @@ Metal 6 Over 5 Under 7 Dist 1.2600 Width 0.4200 LEN 10 CC 0.224324 FR 1.326236 T
 Metal 6 Over 5 Under 7 Dist 2.1000 Width 0.4200 LEN 10 CC 0.056952 FR 1.440398 TC 1.497350 CC2 0.006792 OverUnder3/M6oM5uM7/W0.42_W0.42/S2.1_S2.1_L10/wire_1 
 Metal 6 Over 5 Under 7 Dist 2.1000 Width 0.4200 LEN 10 CC 0.135796 FR 1.407394 TC 1.543190 CC2 -0.000000 OverUnder3/M6oM5uM7/W0.42_W0.42/S2.1_S2.1_L10/wire_2 
 Metal 6 Over 5 Under 7 Dist 2.1000 Width 0.4200 LEN 10 CC 0.061238 FR 1.425572 TC 1.486810 CC2 0.002739 OverUnder3/M6oM5uM7/W0.42_W0.42/S2.1_S2.1_L10/wire_3 
-[INFO RCX-0442] 417 lines parsed, 0 lines skipped not starting with <Metal>, 278 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/ou_parse.GOLD/fasterCap_3v2.standard.20.0.0.OverUnder3.GOLD.caps
+[INFO RCX-0446] 417 lines parsed, 0 lines skipped not starting with <Metal>, 278 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/ou_parse.GOLD/fasterCap_3v2.standard.20.0.0.OverUnder3.GOLD.caps
 
 openroad> read_rcx_tables -corner TYP -file  /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/M1uM3_parse.GOLD/fasterCap_3v1.normalized.20.20.20.M1uM3.GOLD.caps 
 Metal 2 Over 1 Under 3 Dist 0.1400 Width 0.1400 LEN 10 CC 0.581672 FR 0.879558 TC 1.461230 CC2 0.306517 OverUnder3/M2oM1uM3/W0.14_W0.14/S0.14_S0.14_L10/wire_1 
 Metal 2 Over 1 Under 3 Dist 0.1400 Width 0.1400 LEN 10 CC 1.198529 FR -0.174979 TC 1.023550 CC2 -0.000000 OverUnder3/M2oM1uM3/W0.14_W0.14/S0.14_S0.14_L10/wire_2 
 Metal 2 Over 1 Under 3 Dist 0.1400 Width 0.1400 LEN 10 CC 0.563572 FR 0.750878 TC 1.314450 CC2 0.389090 OverUnder3/M2oM1uM3/W0.14_W0.14/S0.14_S0.14_L10/wire_3 
-[INFO RCX-0442] 3 lines parsed, 0 lines skipped not starting with <Metal>, 2 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/M1uM3_parse.GOLD/fasterCap_3v1.normalized.20.20.20.M1uM3.GOLD.caps
+[INFO RCX-0446] 3 lines parsed, 0 lines skipped not starting with <Metal>, 2 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/M1uM3_parse.GOLD/fasterCap_3v1.normalized.20.20.20.M1uM3.GOLD.caps
 
-openroad> read_rcx_tables -corner TYP -file  /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/1v2_parse/1v2_fc.standard.20.20.20.ALL.caps
+openroad> read_rcx_tables -corner TYP -file  /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/1v2_parse.GOLD/1v2_fc.standard.20.20.20.ALL.caps
 Metal 1 Over 0 Under 0 Dist 0.1400 Width 0.1400 LEN 10 CC -0.000000 FR 0.212062 TC 0.212062 CC2 -0.000000 Over1/M1oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_1 
 Metal 2 Over 0 Under 0 Dist 0.1400 Width 0.1400 LEN 10 CC -0.000000 FR 0.183464 TC 0.183464 CC2 -0.000000 Over1/M2oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_1 
 Metal 2 Over 1 Under 0 Dist 0.1400 Width 0.1400 LEN 10 CC -0.000000 FR 0.331987 TC 0.331987 CC2 -0.000000 Over1/M2oM1/W0.14_W0.14/S0.14_S0.14_L10/wire_1 
@@ -540,17 +540,17 @@ Metal 1 Over 0 DiagUnder 2 Dist 0.1400 Width 0.1400 LEN 10 CC -0.000000 FR 0.239
 Metal 1 Over 0 DiagUnder 3 Dist 0.1400 Width 0.1400 LEN 10 CC -0.000000 FR 0.209693 TC 0.209693 CC2 -0.000000 DiagDist 0.0 DiagWidth 0.14 DiagCC 0.017760 UnderDiag1/M1duM3/W0.14_W0.14/S0.14_S0_L10/wire_1 
 Metal 1 Over 0 DiagUnder 4 Dist 0.1400 Width 0.1400 LEN 10 CC -0.000000 FR 0.208805 TC 0.208805 CC2 -0.000000 DiagDist 0.0 DiagWidth 0.14 DiagCC 0.013641 UnderDiag1/M1duM4/W0.14_W0.14/S0.14_S0_L10/wire_1 
 Metal 1 Over 0 DiagUnder 5 Dist 0.1400 Width 0.1400 LEN 10 CC -0.000000 FR 0.231941 TC 0.231941 CC2 -0.000000 DiagDist 0.0 DiagWidth 0.14 DiagCC 0.007884 UnderDiag1/M1duM5/W0.14_W0.14/S0.14_S0_L10/wire_1 
-[INFO RCX-0442] 76 lines parsed, 0 lines skipped not starting with <Metal>, 0 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/1v2_parse/1v2_fc.standard.20.20.20.ALL.caps
+[INFO RCX-0446] 76 lines parsed, 0 lines skipped not starting with <Metal>, 0 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/1v2_parse.GOLD/1v2_fc.standard.20.20.20.ALL.caps
 
 openroad> read_rcx_tables -corner TYP -file  /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/1v1.GOLD/resistance.TYP 
-Metal 1 RESOVER 0 Under 0 Dist 0.0 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M1oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
-Metal 2 RESOVER 0 Under 0 Dist 0.0 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M2oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
-Metal 3 RESOVER 0 Under 0 Dist 0.0 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M3oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
-Metal 4 RESOVER 0 Under 0 Dist 0.0 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M4oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
-Metal 5 RESOVER 0 Under 0 Dist 0.0 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M5oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
-Metal 6 RESOVER 0 Under 0 Dist 0.0 Width 0.4200 LEN 4.2000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.220000 TYP/Over1/M6oM0/W0.42_W0.42/S0.42_S0.42_L10/wire_0 
-Metal 7 RESOVER 0 Under 0 Dist 0.0 Width 1.6000 LEN 16.0000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.150000 TYP/Over1/M7oM0/W1.6_W1.6/S1.76_S1.76_L10/wire_0 
-[INFO RCX-0442] 7 lines parsed, 0 lines skipped not starting with <Metal>, 0 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/1v1.GOLD/resistance.TYP
+Metal 1 RESOVER 0 Under 0 Dist 0.1400 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M1oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
+Metal 2 RESOVER 0 Under 0 Dist 0.1400 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M2oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
+Metal 3 RESOVER 0 Under 0 Dist 0.1400 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M3oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
+Metal 4 RESOVER 0 Under 0 Dist 0.1400 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M4oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
+Metal 5 RESOVER 0 Under 0 Dist 0.1400 Width 0.1400 LEN 1.4000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.000000 TYP/Over1/M5oM0/W0.14_W0.14/S0.14_S0.14_L10/wire_0 
+Metal 6 RESOVER 0 Under 0 Dist 0.4200 Width 0.4200 LEN 4.2000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.220000 TYP/Over1/M6oM0/W0.42_W0.42/S0.42_S0.42_L10/wire_0 
+Metal 7 RESOVER 0 Under 0 Dist 1.7600 Width 1.6000 LEN 16.0000 CC 0.0 FR 0.0 TC 0.0 CC2 0.0 RES 0.150000 TYP/Over1/M7oM0/W1.6_W1.6/S1.76_S1.76_L10/wire_0 
+[INFO RCX-0446] 7 lines parsed, 0 lines skipped not starting with <Metal>, 0 lines skipped for wrong wire number, filename: /home/dimitris-ic/z/rcx_v2_or/OpenROAD-OpenRCX-v2-fotakis/src/rcx/test/rcx_v2/FasterCapModel/1v1.GOLD/resistance.TYP
 
 openroad> write_rcx_model -file sept24.rcx.model 
 openroad> 
