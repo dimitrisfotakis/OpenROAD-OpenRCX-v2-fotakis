@@ -30,7 +30,6 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include "name.h"
 #include "rcx/extRCap.h"
 #include "rcx/extSpef.h"
 #include "utl/Logger.h"
@@ -38,20 +37,7 @@
 
 namespace rcx {
 
-using odb::dbBTerm;
-using odb::dbCapNode;
-using odb::dbCCSeg;
-using odb::dbInst;
-using odb::dbITerm;
-using odb::dbNet;
-using odb::dbRSeg;
-using odb::dbSet;
-using odb::dbShape;
-using odb::dbSigType;
-using odb::dbWire;
-using odb::dbWirePath;
-using odb::dbWirePathItr;
-using odb::dbWirePathShape;
+using namespace odb;
 using utl::RCX;
 
 dbInst* extSpef::getDbInst(const uint id)
