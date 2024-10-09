@@ -40,23 +40,8 @@
 
 namespace rcx {
 
-using odb::dbInst;
-using odb::dbNet;
-using odb::dbRSeg;
-using odb::dbSBox;
-using odb::dbSet;
-using odb::dbShape;
-using odb::dbSigType;
-using odb::dbSWire;
-using odb::dbTechLayer;
-using odb::dbTechLayerDir;
-using odb::dbTechLayerType;
-using odb::dbTrackGrid;
-using odb::dbWire;
-using odb::dbWireShapeItr;
-using odb::MAX_INT;
-using odb::MIN_INT;
-using odb::Rect;
+using namespace odb;
+
 using utl::RCX;
 
 uint extMain::getBucketNum(int base, int max, uint step, int xy)
@@ -1209,6 +1194,7 @@ uint extMain::couplingFlow(Rect& extRect,
                          _allNet,
                          _ccContextDepth,
                          _ccContextArray,
+                         _ccContextLength,
                          _dgContextArray,
                          &_dgContextDepth,
                          &_dgContextPlanes,

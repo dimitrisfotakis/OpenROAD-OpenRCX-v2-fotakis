@@ -36,6 +36,7 @@
 
 namespace rcx {
 
+
 class ext2dBox  // assume cross-section on the z-direction
 {
  public:
@@ -55,9 +56,39 @@ class ext2dBox  // assume cross-section on the z-direction
   int ll0() const { return _ll[0]; }
   int ll1() const { return _ll[1]; }
 
+  int length() { return _ur[_dir] - _ll[_dir]; }
+  int width() { return _ur[!_dir] - _ll[!_dir]; }
+
+  friend class extMeasure;
+  friend class extRCModel;
+
  private:
   std::array<int, 2> _ll;
   std::array<int, 2> _ur;
+  int _dir;
 };
+/*
+class ext2dBox  // assume cross-section on the z-direction
+{
+  int _ll[2];
+  int _ur[2];
+  uint _met;
+  uint _dir;
+  uint _id;
+  uint _map;
+
+  void rotate();
+  bool matchCoords(int* ll, int* ur);
+  void printGeoms3D(FILE* fp, double h, double t, int* orig);
+  uint length();
+  uint width();
+  int loX();
+  int loY();
+  uint id();
+
+  friend class extMeasure;
+  friend class extRCModel;
+};
+*/
 
 }  // namespace rcx

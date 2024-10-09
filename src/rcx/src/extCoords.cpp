@@ -137,8 +137,9 @@ int extSpef::findNodeIndexFromNodeCoords(uint targetCapNodeId)  // TO OPTIMIZE
 }
 
 }  // namespace rcx
-
+/* DELETE
 namespace rcx {
+    using namespace odb;
 
 void Ath__grid::dealloc()
 {
@@ -173,3 +174,4 @@ void Ath__gridTable::dealloc()
 }
 
 }  // namespace rcx
+*/

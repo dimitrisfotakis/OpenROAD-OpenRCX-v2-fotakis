@@ -30,26 +30,15 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include "ext2dBox.h"
 #include "rcx/dbUtil.h"
 #include "rcx/extRCap.h"
 #include "utl/Logger.h"
 
 namespace rcx {
 
-using odb::dbBTerm;
-using odb::dbCapNode;
-using odb::dbCCSeg;
-using odb::dbNet;
-using odb::dbRSeg;
-using odb::dbSet;
-using odb::dbShape;
-using odb::dbTech;
-using odb::dbTechLayer;
-using odb::dbTechLayerDir;
-using odb::dbWire;
-using odb::dbWirePath;
-using odb::dbWirePathItr;
-using odb::dbWirePathShape;
+using namespace odb;
+
 using utl::RCX;
 
 bool extMeasure::getFirstShape(dbNet* net, dbShape& s)
@@ -125,6 +114,69 @@ void extMeasure::updateBox(uint w_layout, uint s_layout, int dir)
   _ur[d] = _ll[d] + w_layout;
 }
 
+
+uint extMeasure::createNetSingleWire(char* dirName, uint idCnt, uint w_layout,
+                                     uint s_layout, int dir) {
+  if (w_layout == 0) {
+    dbTechLayer* layer = _create_net_util.getRoutingLayer()[_met];
+    w_layout = layer->getWidth();
+  }
+  if (s_layout == 0) {
+    uint d = _dir;
+    if (dir >= 0)
+      d = dir;
+    _ur[d] = _ll[d] + w_layout;
+  } else {
+    updateBox(w_layout, s_layout, dir);
+  }
+
+  //	uint w2= w_layout/2;
+  int ll[2];
+  int ur[2];
+  ll[0] = _ll[0];
+  ll[1] = _ll[1];
+  ur[0] = _ur[0];
+  ur[1] = _ur[1];
+
+  /*
+          if (_dir)
+                  ll[0] -=w2;
+          else
+                  ll[1] -=w2;
+  */
+
+  //	ur[!_dir] = ur[!_dir] + _minWidth - w_layout;
+  ur[!_dir] = ur[!_dir] - w_layout / 2;
+  ll[!_dir] = ll[!_dir] + w_layout / 2;
+
+  //	updateBox(w_layout, s_layout, dir);
+  char left, right;
+  _block->getBusDelimeters(left, right);
+
+  char netName[1024];
+  sprintf(netName, "%s%c%d%c", dirName, left, idCnt, right);
+  if (_skip_delims)
+    sprintf(netName, "%s_%d", dirName, idCnt);
+
+  assert(_create_net_util.getBlock() == _block);
+  dbNet* net = _create_net_util.createNetSingleWire(netName, ll[0], ll[1],
+                                                    ur[0], ur[1], _met);
+
+  dbBTerm* in1 = net->get1stBTerm();
+  if (in1 != NULL) {
+    in1->rename(net->getConstName());
+    // fprintf(stdout, "M%d  %8d %8d   %8d %8d DX=%d DY=%d  %s\n",
+      // _met, ll[0], ll[1], ur[0], ur[1], ur[0]-ll[0], ur[1]-ll[1], netName);
+  }
+
+  uint netId = net->getId();
+  addNew2dBox(net, ll, ur, _met, _dir, netId, false);
+
+  _extMain->makeNetRCsegs(net);
+
+  return netId;
+}
+/*  ---------------------------------------------------- FIXME dkf ------------------
 uint extMeasure::createNetSingleWire(char* dirName,
                                      uint idCnt,
                                      uint w_layout,
@@ -177,8 +229,10 @@ uint extMeasure::createNetSingleWire(char* dirName,
                                                ur[0],
                                                ur[1],
                                                _met,
-                                               /*skipBTerms=*/false,
-                                               /*skipNetExists=*/false,
+                                               //skipBTerms=
+                                               false,
+                                               // skipNetExists=
+                                               false,
                                                mask_color);
   } else {
     net = _create_net_util.createNetSingleWire(
@@ -197,7 +251,7 @@ uint extMeasure::createNetSingleWire(char* dirName,
 
   return netId;
 }
-
+*/
 uint extMeasure::createNetSingleWire_cntx(int met,
                                           char* dirName,
                                           uint idCnt,
@@ -221,7 +275,7 @@ uint extMeasure::createNetSingleWire_cntx(int met,
 
   return net->getId();
 }
-
+/*  FIXME dkf ----------------------------------------
 uint extMeasure::createDiagNetSingleWire(char* dirName,
                                          uint idCnt,
                                          int begin,
@@ -260,37 +314,68 @@ uint extMeasure::createDiagNetSingleWire(char* dirName,
 
   return net->getId();
 }
+*/
+uint extMeasure::createDiagNetSingleWire(char* dirName, uint idCnt, int begin,
+                                         int w_layout, int s_layout, int dir) {
+  int ll[2], ur[2];
+  ll[!_dir] = _ll[!_dir];
+  ll[_dir] = begin;
+  ur[!_dir] = _ur[!_dir];
+  ur[_dir] = begin + w_layout;
 
-ext2dBox* extMeasure::addNew2dBox(dbNet* net,
-                                  int* ll,
-                                  int* ur,
-                                  uint m,
-                                  bool cntx)
-{
+  int met = 0;
+  if (_overMet > 0)
+    met = _overMet;
+  else if (_underMet > 0)
+    met = _underMet;
+
+  char left, right;
+  _block->getBusDelimeters(left, right);
+
+  char netName[1024];
+  sprintf(netName, "%s%c%d%c", dirName, left, idCnt, right);
+  if (_skip_delims)
+    sprintf(netName, "%s_%d", dirName, idCnt);
+
+  assert(_create_net_util.getBlock() == _block);
+  dbNet* net = _create_net_util.createNetSingleWire(netName, ll[0], ll[1],
+                                                    ur[0], ur[1], met);
+  addNew2dBox(net, ll, ur, met, _dir, net->getId(), false);
+
+  _extMain->makeNetRCsegs(net);
+
+  return net->getId();
+}
+ext2dBox* extMeasure::addNew2dBox(dbNet* net, int* ll, int* ur, uint m, uint d,
+                                  uint id, bool cntx) {
   ext2dBox* bb = _2dBoxPool->alloc();
 
-  std::array<int, 2> bb_ll;
-  std::array<int, 2> bb_ur;
   dbShape s;
-  if ((net != nullptr) && _extMain->getFirstShape(net, s)) {
-    bb_ll = {s.xMin(), s.yMin()};
-    bb_ur = {s.xMax(), s.yMax()};
+  if ((net != NULL) && _extMain->getFirstShape(net, s)) {
+    bb->_ll[0] = s.xMin();
+    bb->_ll[1] = s.yMin();
+    bb->_ur[0] = s.xMax();
+    bb->_ur[1] = s.yMax();
   } else {
-    bb_ll = {ll[0], ll[1]};
-    bb_ur = {ur[0], ur[1]};
+    bb->_ll[0] = ll[0];
+    bb->_ll[1] = ll[1];
+    bb->_ur[0] = ur[0];
+    bb->_ur[1] = ur[1];
   }
-
-  new (bb) ext2dBox(bb_ll, bb_ur);
-
-  if (cntx) {  // context net
+  bb->_dir = d;
+/* DELETE
+  bb->_met = m;
+  bb->_dir = d;
+  bb->_id = id;
+  bb->_map = 0;
+*/
+  if (cntx)  // context net
     _2dBoxTable[1][m].add(bb);
-  } else {  // main net
+  else  // main net
     _2dBoxTable[0][m].add(bb);
-  }
 
   return bb;
 }
-
 void extMeasure::clean2dBoxTable(int met, bool cntx)
 {
   if (met <= 0) {
@@ -302,7 +387,20 @@ void extMeasure::clean2dBoxTable(int met, bool cntx)
   }
   _2dBoxTable[cntx][met].resetCnt();
 }
+uint extMeasure::getBoxLength(uint ii, int met, bool cntx) {
+  if (met <= 0)
+    return 0;
 
+  int cnt = _2dBoxTable[cntx][met].getCnt();
+  if (cnt <= 0)
+    return 0;
+
+  ext2dBox* bb = _2dBoxTable[cntx][met].get(ii);
+
+  //	return bb->length();
+  return bb->width();
+}
+/* FIXME dkf ----------------------------------------
 void extMeasure::getBox(int met,
                         bool cntx,
                         int& xlo,
@@ -328,11 +426,31 @@ void extMeasure::getBox(int met,
   xhi = std::max(bbLo->ur0(), bbHi->ur0());
   yhi = std::max(bbLo->ur1(), bbHi->ur1());
 }
+ ------------------------------------------------------------------------ */
+void extMeasure::getBox(int met, bool cntx, int& xlo, int& ylo, int& xhi, int& yhi) {
+  if (met <= 0)
+    return;
+
+  int cnt = _2dBoxTable[cntx][met].getCnt();
+  if (cnt <= 0)
+    return;
+
+  ext2dBox* bbLo = _2dBoxTable[cntx][met].get(0);
+  ext2dBox* bbHi = _2dBoxTable[cntx][met].get(cnt - 1);
+
+  xlo = std::min(bbLo->loX(), bbHi->loX());
+  ylo = std::min(bbLo->loY(), bbHi->loY());
+
+  xhi = std::max(bbLo->_ur[0], bbHi->_ur[0]);
+  yhi = std::max(bbLo->_ur[1], bbHi->_ur[1]);
+}
+
 
 void extMeasure::writeRaphaelPointXY(FILE* fp, double X, double Y)
 {
   fprintf(fp, "  %6.3f,%6.3f ; ", X, Y);
 }
+/*  FIXME dkf ----------------------------------------------------------------------
 
 uint extMeasure::createContextNets(char* dirName,
                                    const int bboxLL[2],
@@ -396,7 +514,67 @@ uint extMeasure::createContextNets(char* dirName,
   }
   return cnt - 1;
 }
+*/
+uint extMeasure::createContextNets(char* dirName, int bboxLL[2], int bboxUR[2],
+                                   int met, double pitchMult) {
+  if (met <= 0)
+    return 0;
 
+  // char left, right;
+  // _block->getBusDelimeters(left, right);
+
+  dbTechLayer* layer = _tech->findRoutingLayer(met);
+  dbTechLayer* mlayer = _tech->findRoutingLayer(_met);
+  uint minWidth = layer->getWidth();
+  uint minSpace = layer->getSpacing();
+  int pitch = ceil(1000 * ((minWidth + minSpace) * pitchMult) / 1000);
+
+  int ll[2];
+  int ur[2];
+
+  uint offset = 0;
+  /*
+          if (met > _met)
+                  offset= _minWidth+_minSpace;
+          else
+                  offset= 2*(minWidth+minSpace);
+  */
+  ll[_dir] = bboxLL[_dir] - offset;
+  ur[_dir] = bboxUR[_dir] + offset;
+
+  _ur[_dir] = ur[_dir];
+
+  uint cnt = 1;
+
+  uint not_dir = !_dir;
+  int start = bboxLL[not_dir] + offset;
+  //	int end= bboxUR[not_dir]-offset;
+  int end = bboxUR[not_dir];
+  for (int lenXY = (int)(start + minWidth); (int)(lenXY + minWidth) <= end;
+       lenXY += pitch) {
+    ll[not_dir] = lenXY;
+    ur[not_dir] = lenXY + minWidth;
+
+    char netName[1024];
+    // sprintf(netName, "%s_m%d_cntxt%c%d%c", dirName, met, left, cnt++, right);
+    sprintf(netName, "%s_m%d_cntxt_%d", dirName, met, cnt++);
+    dbNet* net;
+    assert(_create_net_util.getBlock() == _block);
+    if (mlayer->getDirection() != dbTechLayerDir::HORIZONTAL)
+      net = _create_net_util.createNetSingleWire(
+          netName, ll[0], ll[1], ur[0], ur[1], met, dbTechLayerDir::HORIZONTAL,
+          false);
+    else
+      net = _create_net_util.createNetSingleWire(netName, ll[0], ll[1], ur[0],
+                                                 ur[1], met,
+                                                 mlayer->getDirection(), false);
+    //		net= _create_net_util.createNetSingleWire(netName, ll[0], ll[1],
+    // ur[0], ur[1], met);
+
+    addNew2dBox(net, ll, ur, met, not_dir, net->getId(), true);  // TEST not_dir
+  }
+  return cnt - 1;
+}
 dbRSeg* extMeasure::getFirstDbRseg(uint netId)
 {
   dbNet* net = dbNet::getNet(_block, netId);
@@ -548,7 +726,7 @@ void extMeasure::release(Ath__array1D<SEQ*>* seqTable, gs* pixelTable)
   seqTable->resetCnt();
 }
 
-int extMeasure::calcDist(const int* ll, const int* ur)
+int extMeasure::calcDist( int* ll,  int* ur)
 {
   int d = ll[_dir] - _ur[_dir];
   if (d >= 0) {
@@ -562,7 +740,7 @@ int extMeasure::calcDist(const int* ll, const int* ur)
   return 0;
 }
 
-SEQ* extMeasure::addSeq(const int* ll, const int* ur)
+SEQ* extMeasure::addSeq( int* ll,  int* ur)
 {
   SEQ* s = _pixelTable->salloc();
   for (uint ii = 0; ii < 2; ii++) {
@@ -573,8 +751,8 @@ SEQ* extMeasure::addSeq(const int* ll, const int* ur)
   return s;
 }
 
-void extMeasure::addSeq(const int* ll,
-                        const int* ur,
+void extMeasure::addSeq( int* ll,
+                         int* ur,
                         Ath__array1D<SEQ*>* seqTable,
                         gs* pixelTable)
 {
@@ -2029,7 +2207,7 @@ void extMeasure::addFringe(dbRSeg* rseg1,
 }
 
 void extMeasure::calcDiagRC(int rsegId1,
-                            uint rsegId2,
+                            int rsegId2,
                             uint len,
                             uint diagWidth,
                             uint diagDist,
@@ -2076,7 +2254,7 @@ void extMeasure::calcDiagRC(int rsegId1,
   }
 }
 
-void extMeasure::createCap(int rsegId1, uint rsegId2, double* capTable)
+void extMeasure::createCap(int rsegId1, int rsegId2, double* capTable)
 {
   dbRSeg* rseg1 = nullptr;
   dbRSeg* rseg2 = nullptr;
@@ -2198,7 +2376,7 @@ bool extMeasure::verticalCap(int rsegId1,
 }
 
 void extMeasure::calcDiagRC(int rsegId1,
-                            uint rsegId2,
+                            int rsegId2,
                             uint len,
                             uint dist,
                             uint tgtMet)
@@ -2325,48 +2503,6 @@ void extMeasure::calcRC(dbRSeg* rseg1, dbRSeg* rseg2, uint totLenCovered)
   }
 
   _lenOUtable->resetCnt();
-}
-
-void extMeasure::OverSubRC(dbRSeg* rseg1,
-                           dbRSeg* rseg2,
-                           int ouCovered,
-                           int diagCovered,
-                           int srcCovered)
-{
-  int res_lenOverSub = 0;
-
-  int lenOverSub = _len - ouCovered;
-  if (lenOverSub < 0) {
-    lenOverSub = 0;
-  }
-
-  bool rvia1 = rseg1 != nullptr && isVia(rseg1->getId());
-
-  if (!((lenOverSub > 0) || (res_lenOverSub > 0))) {
-    return;
-  }
-
-  _underMet = 0;
-  for (uint jj = 0; jj < _metRCTable.getCnt(); jj++) {
-    extDistRC* rc = _metRCTable.get(jj)->getOverFringeRC(this);
-    if (rc == nullptr) {
-      continue;
-    }
-    double cap = 0;
-    if (lenOverSub > 0) {
-      cap = rc->getFringe() * lenOverSub;
-      _extMain->updateTotalCap(rseg1, cap, jj);
-    }
-    double res = 0;
-    if (!_extMain->_lef_res && !rvia1) {
-      if (res_lenOverSub > 0) {
-        res = rc->getRes() * res_lenOverSub;
-        _extMain->updateRes(rseg1, res, jj);
-      }
-    }
-    const char* msg = "OverSubRC (No Neighbor)";
-    OverSubDebug(rc, lenOverSub, res_lenOverSub, res, cap, msg);
-  }
 }
 
 /**
