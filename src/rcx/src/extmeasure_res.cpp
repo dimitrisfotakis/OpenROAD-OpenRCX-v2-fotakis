@@ -32,9 +32,11 @@
 
 #include "rcx/dbUtil.h"
 #include "rcx/extRCap.h"
+#include "rcx/extMeasure.h"
 #include "utl/Logger.h"
 
 namespace rcx {
+    using namespace odb;
 
 int extMeasure::computeResDist(SEQ* s,
                                uint trackMin,
