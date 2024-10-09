@@ -504,6 +504,7 @@ uint extMain::benchWires(extMainOptions* opt) {
   opt->_block = _block;
 
   if (opt->_gen_def_patterns) {
+    opt->_res_patterns= false;
     m->linesOverBench(opt);
 
 // if (opt->_v1)
@@ -577,5 +578,4 @@ uint extRCModel::runWiresSolver(uint netId, int shapeId) {
   runSolver("rc3 -n -x");
   return 0;
 }
-
 }  // namespace rcx

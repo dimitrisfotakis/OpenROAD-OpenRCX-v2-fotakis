@@ -58,7 +58,7 @@ uint extSolverGen::genSolverPatterns(const char* process_name,
   _3dFlag = true;
   _diag = 0;
 
-  setDiagModel(0);
+  setDiagModel(0); // to initialize _diagModel;
 
   uint cnt1 = linesOver();
   cnt1 += linesUnder();

@@ -87,6 +87,7 @@ void Ext::bench_wires(const BenchWiresOptions& bwo)
 {
   extMainOptions opt;
 
+  opt._v1= bwo.v1;
   opt._topDir = bwo.dir;
   opt._met_cnt = bwo.met_cnt;
   opt._met = bwo.met;

@@ -34,6 +34,7 @@
 
 #include "wire.h"
 
+namespace rcx {
 using namespace odb;
 
 //#define SINGLE_WIRE
@@ -3304,3 +3305,4 @@ void Ath__gridTable::getIds(uint wid, uint* id1, uint* id2, uint* wtype)
   *id1 = w->_boxId;
   *id2 = w->_otherId;
 }
+} // namespace

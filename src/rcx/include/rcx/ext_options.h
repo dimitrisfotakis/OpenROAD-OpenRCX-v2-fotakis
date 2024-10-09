@@ -99,6 +99,7 @@ struct BenchWiresOptions
   {
     const char* nets = nullptr;
     int net_id = 0;
+    
     const char* ext_corner_name = nullptr;
     int corner = -1;
     const int debug = 0;

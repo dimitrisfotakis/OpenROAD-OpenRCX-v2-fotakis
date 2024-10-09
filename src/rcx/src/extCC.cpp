@@ -39,7 +39,7 @@
 namespace rcx {
 CoupleOptions coupleOptionsNull{};
 };
-
+using namespace rcx;
 uint Ath__track::trackContextOn(int orig, int end, int base, int width,
                                 uint firstContextTrack,
                                 Ath__array1D<int>* context) {
