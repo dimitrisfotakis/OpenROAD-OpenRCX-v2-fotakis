@@ -30,13 +30,15 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#pragma once
+// #pragma once
+#ifndef UTIL_Y
+#define UTIL_Y
 
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
 
-namespace rcx {
+// namespace rcx {
 
 // Simple list
 template <class T>
@@ -101,8 +103,7 @@ class AthList
 };
 
 // A simple hash implementation
-template <class T>
-class AthHash
+template <class T> class AthHash
 {
   unsigned int* m_listOfPrimes;
 
@@ -267,4 +268,5 @@ class AthHash
   }
 };
 
-}  // namespace rcx
+// }  // namespace rcx
+#endif
