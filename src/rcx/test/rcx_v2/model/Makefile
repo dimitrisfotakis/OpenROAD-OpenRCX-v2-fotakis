@@ -20,10 +20,10 @@ patterns: v1_patterns v12_patterns gen_model_3
 bench: over_v2_bench over_under_v2_bench under_v2_bench 
 
 v1_patterns: 
-		$(run_rcx) $(or_exec) ./ $@
+		$(run_rcx) $(or_exec) ./ $@ $(gold_dir)
 
 v12_patterns: 
-		$(run_rcx) $(or_exec) ./ $@
+		$(run_rcx) $(or_exec) ./ $@ $(gold_dir)
 
 gen_model_3:
 		$(gen_model_rcx) $(or_exec) ./ $@ $(gold_dir)/$@
