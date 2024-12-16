@@ -1,7 +1,8 @@
 set test_case v12_patterns
-set test_dir ../../../
+# set test_dir ../../../
+set test_dir ../data
 
-read_lef $test_dir/sky130hs/sky130hs.tlef 
+read_lef $test_dir/sky130hs.tlef 
 
 bench_wires -len 100 -all -v1
 
